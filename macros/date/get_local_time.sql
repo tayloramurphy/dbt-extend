@@ -1,1 +1,1 @@
-{% macro get_local_time(tz='America/Los_Angeles') %}{{ to_local_tz(tz, 'current_timestamp::timestamp_ntz') }}{% endmacro %}
+{% macro get_local_time(tz='America/Los_Angeles') %}{{ dbt_extend.to_local_tz(tz, 'current_timestamp::timestamp_ntz') }}{% endmacro %}

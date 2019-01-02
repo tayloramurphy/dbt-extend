@@ -1,1 +1,1 @@
-{% macro get_local_date(tz='America/Los_Angeles') %}{{ get_local_time(tz) }}::date{% endmacro %}
+{% macro get_local_date(tz='America/Los_Angeles') %}{{ dbt_extend.get_local_time(tz) }}::date{% endmacro %}
