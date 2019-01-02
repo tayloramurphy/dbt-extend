@@ -6,5 +6,6 @@ clean-targets: ["target", "dbt_modules"]
 macro-paths: ["macros"]
 log-path: "logs"
 
-vars:
-  time_zone: 'America/New_York'
+models:
+    vars:
+        time_zone: 'America/New_York'
