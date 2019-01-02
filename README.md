@@ -72,6 +72,12 @@ Usage:
 {{ dbt_extend.get_local_date() }}
 ```
 
+or, specify a timezone:
+```python
+{{ dbt_extend.get_local_date('America/New_York') }}
+```
+
+
 #### get_local_time ([source](macros/date/get_local_time.sql))
 Gets time based on local timezone (specified). Default is "America/LosAngeles".
 
@@ -79,6 +85,12 @@ Usage:
 
 ```python
 {{ dbt_extend.get_local_time() }}
+```
+
+or, specify a timezone:
+
+```python
+{{ dbt_extend.get_local_time('America/New_York') }}
 ```
 
 #### n_days_ago ([source](macros/date/n_days_ago.sql))
@@ -132,13 +144,13 @@ Converts timestamp to local timestamp.
 Usage:
 
 ```python
-{{ dbt_extend.to_local_tz(column) }}
+{{ dbt_extend.to_local_tz('my_column') }}
 ```
 
-or
+or, specify a timezone:
 
 ```python
-{{ dbt_extend.to_local_tz(column, tz='America/Los_Angeles') }}
+{{ dbt_extend.to_local_tz('my_column', 'America/New_York') }}
 ```
 
 
