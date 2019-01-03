@@ -7,12 +7,16 @@
     {% endif %}
 {% endmacro %}
 
-{% macro get_select(model, expression, group_by) %}
+{% macro get_select(model, expression, filter_cond, group_by) %}
     select
         {{ get_columns(group_by) }},
         {{ expression }} as expression
     from 
         {{ model }}
+    {% if filter_cond %}
+    where 
+        {{ filter_cond }}
+    {% endif %}
     {{ dbt_utils.group_by(group_by|length) }}
 {% endmacro %}
 
@@ -21,21 +25,24 @@
                                 compare_expression=None, 
                                 group_by=["'col'"], 
                                 compare_group_by=None, 
+                                filter_cond=None,
+                                compare_filter_cond=None,
                                 tol=0.0) %}
 
-    {% set compare_model = model if not compare_model else compare_model%} 
-    {% set compare_expression = expression if not compare_expression else compare_expression%} 
-    {% set compare_group_by = group_by if not compare_group_by else compare_group_by%} 
+    {% set compare_model = model if not compare_model else compare_model %} 
+    {% set compare_expression = expression if not compare_expression else compare_expression %} 
+    {% set compare_filter_cond = filter_cond if not compare_filter_cond else compare_filter_cond %} 
+    {% set compare_group_by = group_by if not compare_group_by else compare_group_by %} 
 
     {% set n_cols = group_by|length %}
 
     with a as (
 
-        {{ get_select(model, expression, group_by) }}
+        {{ get_select(model, expression, filter_cond, group_by) }}
     ),
     b as (
 
-        {{ get_select(compare_model, compare_expression, compare_group_by) }}
+        {{ get_select(compare_model, compare_expression, compare_filter_cond, compare_group_by) }}
 
     ),
     final as (
