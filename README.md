@@ -1,6 +1,14 @@
 # dbt-extend
 Extension package for [dbt](https://github.com/fishtown-analytics/dbt), including schema tests and validation macros.
 
+## Variables
+The following variables need to be defined in your `dbt_project.yml` file:
+
+`'dbt_extend:time_zone': 'America/Los_Angeles'`
+
+You may specify [any valid timezone string](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) in place of `America/Los_Angeles`.
+For example, use `America/New_York` for East Coast Time.
+
 ## Macros
 ### Data Type Conversion
 #### empty_to_na ([source](macros/data_type/empty_to_na.sql))
