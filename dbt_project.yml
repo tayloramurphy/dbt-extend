@@ -13,4 +13,4 @@ quoting:
 
 models:
     vars:
-        'time_zone': 'America/New_York'
+        'dbt_extend:time_zone': 'America/New_York'
