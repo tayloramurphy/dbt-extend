@@ -1,5 +1,7 @@
 # dbt-extend
-Extension package for [dbt](https://github.com/fishtown-analytics/dbt), including schema tests and validation macros.
+Extension package for [**dbt**](https://github.com/fishtown-analytics/dbt), including schema tests and validation macros.
+
+FYI: this package includes [**dbt-utils**](https://github.com/fishtown-analytics/dbt-utils) so there's no need to also import dbt-utils in your local project. (In fact, you may get an error if you do.)
 
 ## Variables
 The following variables need to be defined in your `dbt_project.yml` file:
