@@ -197,6 +197,10 @@ Parameters:
 
 `compare_expression` : if specified, an expression, using SQL compatible with database platform, to apply to the `model` or `comparison_model` (if specified) 
 
+`filter_cond` : if specified, expression to be evaluated in a `where` clause
+
+`compare_filter_cond` : if specified, expression to be evaluated in a `where` clause on the comparison model, defaults to `filter_cond` if not specified
+
 `group_by` : list of columns from `model` to use as group by columns. If specified, evaluates `expression` at the granularity of the `group_by` columns.
 
 `compare_group_by` : if specified, columns to group by the `comparison_model`; otherwise, same column names as specified in `group_by` are assumed.
@@ -226,6 +230,13 @@ models:
           group_by: [date_col]
       - dbt_utils.equal_expression:
           expression: sum(col_a)
+          compare_expression: sum(col_b)
+          compare_model: ref('same_or_other_model_name')
+          group_by: [date_col]
+          tol: 100
+      - dbt_utils.equal_expression:
+          expression: sum(col_a)
+          filter_cond: where date_col > dateadd('day', -7, current_date)
           compare_expression: sum(col_b)
           compare_model: ref('same_or_other_model_name')
           group_by: [date_col]
