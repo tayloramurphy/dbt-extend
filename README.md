@@ -12,7 +12,7 @@ For example, use `America/New_York` for East Coast Time.
 ## Macros
 ### Data Type Conversion
 #### empty_to_na ([source](macros/data_type/empty_to_na.sql))
-Converts an empty value to a "(N/A)".
+Converts an empty value to "(N/A)" or other, if specified.
 
 Usage:
 
@@ -25,7 +25,7 @@ or
 ```
 
 #### is_email ([source](macros/data_type/is_email.sql))
-Checks if a column value is a proper email address.
+Returns a boolean indicating if a column value is a proper email address.
 
 Usage:
 
@@ -72,7 +72,7 @@ or
 
 ### Date
 #### get_local_date ([source](macros/date/get_local_date.sql))
-Gets date based on local timezone (specified). Default is "America/LosAngeles".
+Gets date based on local timezone (specified). Package default is "America/Los_Angeles". The default must be specified in `dbt_project.yml`, in the `'dbt_extend:time_zone'` variable. e.g `'dbt_extend:time_zone': 'America/New_York'`.
 
 Usage:
 
@@ -87,7 +87,7 @@ or, specify a timezone:
 
 
 #### get_local_time ([source](macros/date/get_local_time.sql))
-Gets time based on local timezone (specified). Default is "America/LosAngeles".
+Gets time based on local timezone (specified). Default is "America/Los_Angeles".
 
 Usage:
 
@@ -173,7 +173,7 @@ Usage:
 
 ### Database Admin (Snowflake)
 #### recluster ([source](macros/dbt/snowflake/recluster.sql))
-Adds clustered key to Snowflake table and enlists table in automatic reclustering.
+Adds clustered key to Snowflake table and enlists table in automatic reclustering (requires Snowflake Enterprise Edition).
 
 ```python
 {{
