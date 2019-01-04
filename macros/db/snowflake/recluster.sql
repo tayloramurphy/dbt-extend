@@ -11,5 +11,7 @@
 {% if do %}
 alter table {{ this }} cluster by ({{ col }});
 alter table {{ this }} resume recluster;
+{% else %}
+-- nothing to do 
 {% endif %}
 {% endmacro %}
