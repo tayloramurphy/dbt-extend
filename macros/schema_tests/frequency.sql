@@ -1,4 +1,4 @@
-{%- macro test_frequency(model, date_col, date_part="day", filter_cond=None) -%}
+{%- macro test_frequency(model, date_col, date_part="day", filter_cond=None, test_start_date=None, test_end_date=None) -%}
 {% if not execute %}
     {{ return('') }}
 {% endif %}
@@ -15,8 +15,8 @@
 {% endcall %}
 
 {%- set dr = load_result('date_range') -%}
-{%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') -%}
-{%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') -%}
+{%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') if not test_start_date else test_start_date -%}
+{%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') if not test_end_date else test_end_date -%}
 
 with day_dates as
 (
