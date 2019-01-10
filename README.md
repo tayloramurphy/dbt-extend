@@ -246,7 +246,7 @@ models:
 ```
 
 #### frequency ([source](macros/schema_tests/frequency.sql))
-This schema test asserts that a tabel has records for every instance of the specified date part. For example, if `date_part: day`, the test asserts whether the given model has rows for every day. The dates are bounded by the min and max dates in the model, or can be limited by the `filter_cond` argument.
+This schema test asserts that a table has records for every instance of the specified date part. For example, if `date_part: day`, the test asserts whether the given model has rows for every day. The dates are bounded by the min and max dates in the model, or can be limited by the `filter_cond` argument.
 
 Parameters:
 
@@ -255,6 +255,11 @@ Parameters:
 `date_part` : if specified, determines the date granularity for the test. For example, "w" specifies weekly grouping of data. Default is "d".
 
 `filter_cond` : if specified, expression to be evaluated in a `where` clause
+
+`test_start_date` : if specified, specifies a start date for the test. If the model does not have data as far back as this date, the test will fail. If not specified, the model's min date (from 'date_col`) will be used for the test.
+
+`test_end_date` : if specified, specifies an end date for the test. If the model does not have data through this date, the test will fail. If not specified, the model's max date (from 'date_col`) will be used for the test.
+
 
 ```yaml
 version: 2
