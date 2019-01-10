@@ -216,27 +216,27 @@ version: 2
 models:
   - name: model_name
     tests:
-      - dbt_utils.equal_expression:
+      - dbt_extend.equal_expression:
           expression: count(*)
           compare_model: ref('same_or_other_model_name')
-      - dbt_utils.equal_expression:
+      - dbt_extend.equal_expression:
           expression: count(*)
           compare_model: ref('same_or_other_model_name')
           group_by: [date_col]
-      - dbt_utils.equal_expression:
+      - dbt_extend.equal_expression:
           expression: sum(col_a)
           compare_model: ref('same_or_other_model_name')
-      - dbt_utils.equal_expression:
+      - dbt_extend.equal_expression:
           expression: sum(col_a)
           compare_expression: sum(col_b)
           group_by: [date_col]
-      - dbt_utils.equal_expression:
+      - dbt_extend.equal_expression:
           expression: sum(col_a)
           compare_expression: sum(col_b)
           compare_model: ref('same_or_other_model_name')
           group_by: [date_col]
           tol: 100
-      - dbt_utils.equal_expression:
+      - dbt_extend.equal_expression:
           expression: sum(col_a)
           filter_cond: where date_col > dateadd('day', -7, current_date)
           compare_expression: sum(col_b)
@@ -244,3 +244,27 @@ models:
           group_by: [date_col]
           tol: 100
 ```
+
+#### frequency ([source](macros/schema_tests/frequency.sql))
+This schema test asserts that a tabel has records for every instance of the specified date part. For example, if `date_part: day`, the test asserts whether the given model has rows for every day. The dates are bounded by the min and max dates in the model, or can be limited by the `filter_cond` argument.
+
+Parameters:
+
+`date_col` : name of the date column in the model to use for the test
+
+`date_part` : if specified, determines the date granularity for the test. For example, "w" specifies weekly grouping of data. Default is "d".
+
+`filter_cond` : if specified, expression to be evaluated in a `where` clause
+
+```yaml
+version: 2
+
+models:
+  - name: model_name
+    tests:
+      - dbt_extend.frequency:
+          date_col: my_date
+          filter_cond: my_date >= '2018-01-01'
+      - dbt_extend.frequency:
+          date_col: my_date
+          date_part: w
