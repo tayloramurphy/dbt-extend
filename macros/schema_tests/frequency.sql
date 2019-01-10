@@ -11,6 +11,7 @@
     {% if filter_cond %}
     where {{ filter_cond }}
     {% endif %}
+    
 {% endcall %}
 
 {%- set dr = load_result('date_range') -%}
@@ -39,21 +40,12 @@ model_data as
     group by
         1
 ),
-date_range as 
-(
-    select 
-        min(date_{{date_part}}) as start_date, 
-        max(date_{{date_part}}) as end_date 
-    from model_data
-),
 date_part_dates as 
 (
     select
         {{ dbt_utils.date_trunc(date_part, 'date_day') }} as date_{{date_part}}
     from
         day_dates d
-        join
-        date_range dr on d.date_day between dr.start_date and dr.end_date
     group by 
         1
 ),
