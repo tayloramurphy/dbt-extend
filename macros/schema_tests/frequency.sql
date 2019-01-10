@@ -1,10 +1,28 @@
 {%- macro test_frequency(model, date_col, date_part="day", filter_cond=None) -%}
+{% if not execute %}
+    {{ return('') }}
+{% endif %}
+{% call statement('date_range', fetch_result=True) %}
+
+    select 
+        min({{ date_col }}) as start_date, 
+        max({{ date_col }}) as end_date 
+    from {{ model }} 
+    {% if filter_cond %}
+    where {{ filter_cond }}
+    {% endif %}
+{% endcall %}
+
+{%- set dr = load_result('date_range') -%}
+{%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') -%}
+{%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') -%}
+
 with day_dates as
 (
     {{ dbt_utils.date_spine(
         datepart="day",
-        start_date="to_date('01/01/2015', 'mm/dd/yyyy')",
-        end_date="current_date"
+        start_date="'" ~ start_date ~ "'",
+        end_date="'" ~ end_date ~ "'"
        )
     }}
 ),
