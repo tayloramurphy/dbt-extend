@@ -2,6 +2,14 @@
 {% if not execute %}
     {{ return('') }}
 {% endif %}
+{% call statement('date_expression', fetch_result=True) %}
+
+    select 
+        {{ test_start_date }} as start_date, 
+        {{ test_end_date }} as end_date 
+    
+{% endcall %}
+
 {% call statement('date_range', fetch_result=True) %}
 
     select 
@@ -14,9 +22,16 @@
     
 {% endcall %}
 
+{% if test_start_date and test_end_date %}
+{%- set dr = load_result('date_expression') -%}
+{% else %}
 {%- set dr = load_result('date_range') -%}
-{%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') if not test_start_date else test_start_date -%}
-{%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') if not test_end_date else test_end_date -%}
+{% endif %}
+
+{%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') -%}
+{%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') -%}
+
+{{ log(start_date ~ ", " ~ end_date, info=True) }}
 
 with day_dates as
 (
