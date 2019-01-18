@@ -1,4 +1,4 @@
-{%- macro test_frequency(model, date_col, date_part="day", filter_cond=None, test_start_date=None, test_end_date=None) -%}
+{%- macro test_frequency(model, date_col, date_part="day", filter_cond=None, test_start_date=false, test_end_date=false) -%}
 {% if not execute %}
     {{ return('') }}
 {% endif %}
