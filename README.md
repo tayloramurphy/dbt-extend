@@ -256,9 +256,9 @@ Parameters:
 
 `filter_cond` : if specified, expression to be evaluated in a `where` clause
 
-`test_start_date` : if specified, specifies a start date for the test. If the model does not have data as far back as this date, the test will fail. If not specified, the model's min date (from 'date_col`) will be used for the test.
+`test_start_date` : if specified, determines the start date for the test. If the model does not have data as far back as this date, the test will fail. If not specified, the model's min date (from 'date_col`) will be used for the test. This parameter support SQL date expressions.
 
-`test_end_date` : if specified, specifies an end date for the test. If the model does not have data through this date, the test will fail. If not specified, the model's max date (from 'date_col`) will be used for the test.
+`test_end_date` : if specified, determines the end date for the test. If the model does not have data through this date, the test will fail. If not specified, the model's max date (from 'date_col`) will be used for the test. This parameter support SQL date expressions.
 
 
 ```yaml
@@ -273,3 +273,5 @@ models:
       - dbt_extend.frequency:
           date_col: my_date
           date_part: w
+          test_start_date: "'2015-01-01'"
+          test_end_date: "dateadd('d', -7, current_date)"
