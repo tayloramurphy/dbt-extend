@@ -31,8 +31,6 @@
 {%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') -%}
 {%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') -%}
 
-{{ log(start_date ~ ", " ~ end_date, info=True) }}
-
 with day_dates as
 (
     {{ dbt_utils.date_spine(
