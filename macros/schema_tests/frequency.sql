@@ -16,10 +16,16 @@
 {% endcall %}
 
 {%- set dr = load_result('date_range') -%}
+{%- set start_date = dr['data'][0][0] -%}
+{%- set end_date = dr['data'][0][1] -%}
 
-{%- set start_date = dr['data'][0][0].strftime('%Y-%m-%d') -%}
-{%- set end_date = dr['data'][0][1].strftime('%Y-%m-%d') -%}
-
+{% if start_date == None or end_date == None %}
+{{ log(msg='\nmodel ' ~ model ~ ' has no data for filter_cond=' ~ filter_cond ~ '\n', info=True) }}
+select 1
+{% else %}
+{%- set start_date = start_date.strftime('%Y-%m-%d') -%}
+{%- set end_date = end_date.strftime('%Y-%m-%d') -%}
+    
 with day_dates as
 (
     {{ dbt_utils.date_spine(
@@ -63,4 +69,5 @@ final as
         model_data f on d.date_{{date_part}} = f.date_{{date_part}}
 )
 select count(*) from final where row_cnt = 0
+{% endif %}
 {%- endmacro -%}
