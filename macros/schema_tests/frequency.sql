@@ -43,7 +43,7 @@ with day_dates as
 model_data as
 (
     select
-        {{ dbt_utils.date_trunc(date_part, date_col) }} as date_{{date_part}},
+        {{ dbt_utils.date_trunc(date_part, date_col) }}::date as date_{{date_part}},
         count(*) as row_cnt
     from
         {{ model }} f
@@ -56,7 +56,7 @@ model_data as
 date_part_dates as 
 (
     select
-        {{ dbt_utils.date_trunc(date_part, 'date_day') }} as date_{{date_part}}
+        {{ dbt_utils.date_trunc(date_part, 'date_day') }}::date as date_{{date_part}}
     from
         day_dates d
     group by 
