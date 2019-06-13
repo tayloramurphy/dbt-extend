@@ -163,6 +163,18 @@ or, specify a timezone:
 {{ dbt_extend.to_local_tz('my_column', 'America/New_York') }}
 ```
 
+or, also specify a source timezone:
+
+```python
+{{ dbt_extend.to_local_tz('my_column', 'America/New_York', 'UTC') }}
+```
+
+Using named parameters, we can also specify the source only and rely on the configuration parameter for the target:
+
+```python
+{{ dbt_extend.to_local_tz('my_column', source_tz='UTC') }}
+```
+
 
 #### yesterday ([source](macros/date/yesterday.sql))
 Gets yesterday's date, based on local date.
