@@ -3,6 +3,14 @@ Extension package for [**dbt**](https://github.com/fishtown-analytics/dbt), incl
 
 FYI: this package includes [**dbt-utils**](https://github.com/fishtown-analytics/dbt-utils) so there's no need to also import dbt-utils in your local project. (In fact, you may get an error if you do.)
 
+Include in `packages.yml`
+
+```
+packages:
+  - git: "https://github.com/calogica/dbt-extend.git"
+    revision: 0.1.2
+```
+
 ## Variables
 The following variables need to be defined in your `dbt_project.yml` file:
 
