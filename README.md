@@ -194,7 +194,7 @@ Usage:
 ```
 
 ### Database Admin (Snowflake)
-#### recluster ([source](macros/dbt/snowflake/recluster.sql))
+#### recluster ([source](macros/db/snowflake/recluster.sql))
 Adds clustered key to Snowflake table and enlists table in automatic reclustering (requires Snowflake Enterprise Edition).
 
 ```python
